@@ -16,6 +16,8 @@
 		C536A5491E2648F100A88102 /* TrafficLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C536A5481E2648F100A88102 /* TrafficLight.swift */; };
 		C536A54B1E26496E00A88102 /* TrafficLightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C536A54A1E26496E00A88102 /* TrafficLightViewController.swift */; };
 		C536A54E1E2654C200A88102 /* EventUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C536A54D1E2654C200A88102 /* EventUtils.swift */; };
+		C536A5511E26603D00A88102 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C536A54F1E26603D00A88102 /* README.md */; };
+		C536A5521E26603D00A88102 /* WorkLog.md in Sources */ = {isa = PBXBuildFile; fileRef = C536A5501E26603D00A88102 /* WorkLog.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,8 @@
 		C536A5481E2648F100A88102 /* TrafficLight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrafficLight.swift; sourceTree = "<group>"; };
 		C536A54A1E26496E00A88102 /* TrafficLightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrafficLightViewController.swift; sourceTree = "<group>"; };
 		C536A54D1E2654C200A88102 /* EventUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventUtils.swift; sourceTree = "<group>"; };
+		C536A54F1E26603D00A88102 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C536A5501E26603D00A88102 /* WorkLog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = WorkLog.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +69,8 @@
 		4935A9EA1D4726F900B782BC = {
 			isa = PBXGroup;
 			children = (
+				C536A54F1E26603D00A88102 /* README.md */,
+				C536A5501E26603D00A88102 /* WorkLog.md */,
 				4935A9F51D4726F900B782BC /* Traffic Lights */,
 				4935AA0A1D4726F900B782BC /* Traffic LightsTests */,
 				4935A9F41D4726F900B782BC /* Products */,
@@ -232,6 +238,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C536A5511E26603D00A88102 /* README.md in Sources */,
+				C536A5521E26603D00A88102 /* WorkLog.md in Sources */,
 				C536A54E1E2654C200A88102 /* EventUtils.swift in Sources */,
 				C536A5491E2648F100A88102 /* TrafficLight.swift in Sources */,
 				C536A5471E2648EA00A88102 /* TrafficLightController.swift in Sources */,
