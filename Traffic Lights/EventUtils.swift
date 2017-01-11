@@ -3,7 +3,7 @@
 //  Traffic Lights
 //
 //  Created by Nash on 11/1/17.
-//
+//  This class exists to simplify the trigger of NSNotifications throughout the application.
 //
 
 import Foundation
