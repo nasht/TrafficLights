@@ -13,7 +13,7 @@ This project implements a solution to the traffic light test as set out by Safet
 
 The app is designed to be quite has simple as possible, with some view to possible extensiblity. 
 TrafficLight state is managed in the model: TrafficLight. This is a dumb object that only exists to maintain state.
-The TrafficLightController is the guts
+The TrafficLightController is the guts of the logic. It works by setting a repeatingtimer which ticks every second. Once milestones are reached (such as the Green to Amber 25 second milestone or the red to green 30 second milestone, it changes the state of the relevant lights and publishes an event to notify listeners that the light state has changed.
 
 ## Limitations / Considerations
 - While it can support an arbitrary number of lights, the solution in its current form does not take into account more complex logic for light changes. Eg: Denoting a priority set of lights which are alwys green, until a pedestrian or car is at the intersecting road.
