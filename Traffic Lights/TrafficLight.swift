@@ -11,19 +11,15 @@ import Foundation
 class TrafficLight  : AnyObject  {
     
     enum State : String {
-        case RED = "red"
-        case GREEN = "green"
-        case AMBER = "amber"
+        case red = "red"
+        case green = "green"
+        case amber = "amber"
     }
-    
-    //Could use getter and setter extensions here if we want ot make this a less "Dumb" object
-    var currentState:State = .RED
+
+    var currentState:State = .red
     
     
     init(state: State) {
         self.currentState = state
     }
-    
-    
-    
 }

@@ -9,49 +9,82 @@
 import Foundation
 import UIKit
 
-//MARK - Globals
+//MARK:  - Globals
 typealias LightDictionary = [LightDirection:TrafficLight]
 
 enum LightDirection:Int {
-    case NORTH
-    case SOUTH
-    case EAST
-    case WEST
+    case north
+    case south
+    case east
+    case west
 }
 
+//MARK: -
 class TrafficLightController : AnyObject{
     
+    //Lets make this flexible to speed up testing.
+    var maxTime:Int = 30 //seconds
+    var tick:Int = 1 //seconds
+    var amberSec = 25 // seconds
     
-    static let MAX_TIME:Int = 30 //seconds
-    static let INTERVAL:Int = 1 //seconds
-    static let AMBER_SEC = 25 // seconds
-    
-    let lightStates:LightDictionary = [LightDirection.NORTH:TrafficLight(state: .RED),
-                                  LightDirection.SOUTH:TrafficLight(state: .RED),
-                                  LightDirection.EAST:TrafficLight(state: .GREEN),
-                                  LightDirection.WEST:TrafficLight(state: .GREEN)]
+    let lightStates:LightDictionary =
+                                 [LightDirection.north:TrafficLight(state: .red),
+                                  LightDirection.south:TrafficLight(state: .red),
+                                  LightDirection.east:TrafficLight(state: .green),
+                                  LightDirection.west:TrafficLight(state: .green)]
     
 
+    private var _controllerRunning : Bool = false
     
+    var timer:Timer?
+    
+    var isRunning : Bool {
+        get {
+            return _controllerRunning
+        }
+    }
+    
+    func stop() {
+        timer?.invalidate()
+        timer = nil //and hopefully GC will do its job here.
+        self._controllerRunning = false
+        
+    }
+    
+    func reset() {
+        self.stop()
+        self.seconds = 0
+        
+    }
      func start() {
+       
+   
+        
+        //Check controller state matters!
+        if (self._controllerRunning) {
+            return
+        }
+        
         //Fire once to set initial state.
-        EventUtils.notify(notificationName: EventUtils.Notificatons.LIGHTS_CHANGED, payload: ["lights":self.lightStates])
+        EventUtils.notify(notificationName: EventUtils.Notificatons.LIGHTS_CHANGED, payload: [EventUtils.payloadKeyFor(notification: EventUtils.Notificatons.LIGHTS_CHANGED):self.lightStates])
         
         
         //Check light status every INTERVAL seconds
         if #available(iOS 10.0, *) {
-            _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(TrafficLightController.INTERVAL), repeats: true) { (timer) in
+            self.timer  = Timer.scheduledTimer(withTimeInterval: TimeInterval(self.tick), repeats: true) { (timer) in
                 self.updateTrafficState(timer: timer)
             }
         } else {
             // Fallback on earlier versions
-            _ = Timer.scheduledTimer(timeInterval: TimeInterval(TrafficLightController.INTERVAL), target: self, selector:  #selector(updateTrafficState(timer:)), userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(timeInterval: TimeInterval(self.tick), target: self, selector:  #selector(self.updateTrafficState(timer:)), userInfo: nil, repeats: true)
         }
+        
+         self._controllerRunning = true
         
         
     }
     
-    //Had to move seconds here to support pre ios 10 devices
+ 
     var seconds:Int = 0
     
     /* This method is the guts of the controller.
@@ -64,28 +97,31 @@ class TrafficLightController : AnyObject{
         
     */
     @objc func updateTrafficState(timer:Timer) {
-        seconds = (seconds + TrafficLightController.INTERVAL) % TrafficLightController.MAX_TIME
-         EventUtils.notify(notificationName: EventUtils.Notificatons.SECOND_TICKED, payload: ["seconds":self.seconds])
+        seconds = (seconds + tick) % maxTime
+         EventUtils.notify(notificationName: EventUtils.Notificatons.SECOND_TICKED,
+                           payload: [EventUtils.payloadKeyFor(notification: EventUtils.Notificatons.SECOND_TICKED):self.seconds])
+        
         if seconds == 0 {
             for light in self.lightStates.values {
-                if light.currentState == .RED {
-                    light.currentState = .GREEN
+                if light.currentState == .red {
+                    light.currentState = .green
                 }
-                if light.currentState == .AMBER {
-                    light.currentState = .RED
+                if light.currentState == .amber {
+                    light.currentState = .red
                 }
             }
             
-        } else if seconds == TrafficLightController.AMBER_SEC {
+        } else if seconds == amberSec {
             for light in self.lightStates.values {
-                if light.currentState == .GREEN {
-                    light.currentState = .AMBER
+                if light.currentState == .green {
+                    light.currentState = .amber
                 }
             }
         }
         
-        if seconds == 0 || seconds == TrafficLightController.AMBER_SEC {
-            EventUtils.notify(notificationName: EventUtils.Notificatons.LIGHTS_CHANGED, payload: ["lights":self.lightStates])
+        if seconds == 0 || seconds == amberSec {
+            EventUtils.notify(notificationName: EventUtils.Notificatons.LIGHTS_CHANGED,
+                              payload: [EventUtils.payloadKeyFor(notification: EventUtils.Notificatons.LIGHTS_CHANGED):self.lightStates])
         }
     }
 }

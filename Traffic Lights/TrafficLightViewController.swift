@@ -18,60 +18,96 @@ class TrafficLightViewController : UIViewController {
     @IBOutlet weak var southLight: UIImageView!
     
     @IBOutlet weak var secondCounter: UILabel!
-    let imageMap = [TrafficLight.State.AMBER:UIImage(named: "amber"),
-                    TrafficLight.State.RED:UIImage(named: "red"),
-                    TrafficLight.State.GREEN:UIImage(named: "green")]
+    let imageMap = [TrafficLight.State.amber:UIImage(named: "amber"),
+                    TrafficLight.State.red:UIImage(named: "red"),
+                    TrafficLight.State.green:UIImage(named: "green")]
     
-    //This probably should be a singleton.
-    let trafficLightController = TrafficLightController()
+    //This will allow us to map the lightState to the view elements without too much duplication
+    var lightMap : [LightDirection:UIImageView]?
+    
+    //This probably should be a singleton, but I'm leaving for later optimisation
+    var trafficLightController = TrafficLightController()
+    
+  
+
+    
+    //MARK: - configuration methods
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.configureViewHelpers()
+        self.configureLightController()
+        self.configureEventListeners()
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: EventUtils.Notificatons.LIGHTS_CHANGED), object: nil, queue:nil) { (notification) in
-            //Lights have changed, so update each light based on
-            let lights = notification.userInfo?["lights"] as! LightDictionary //Yeah this bit is a bit
+    }
+    
+    func configureViewHelpers() {
+        self.lightMap =
+            [LightDirection.north:northLight,
+             LightDirection.south:southLight,
+             LightDirection.east:eastLight,
+             LightDirection.west:westLight]
+    }
+    func configureLightController() {
+        //Configure the light settings
+        trafficLightController.maxTime = 30
+        trafficLightController.tick = 1
+        trafficLightController.amberSec = 25
+    }
+    func configureEventListeners() {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: EventUtils.Notificatons.LIGHTS_CHANGED),
+                                               object: nil,
+                                               queue:nil) { (notification) in
+            //Lights have changed, so update each lightView
+            let lights = notification.userInfo?[EventUtils.payloadKeyFor(notification: EventUtils.Notificatons.LIGHTS_CHANGED)] as! LightDictionary
             self.updateLightStates(lights )
             
         }
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: EventUtils.Notificatons.SECOND_TICKED), object: nil, queue:nil)  { (notification) in
-            if let secondValue:Int = notification.userInfo?["seconds"] as! Int? {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: EventUtils.Notificatons.SECOND_TICKED),
+                                               object: nil,
+                                               queue:nil)  { (notification) in
+            if let secondValue:Int = notification.userInfo?[EventUtils.payloadKeyFor(notification: EventUtils.Notificatons.SECOND_TICKED)] as! Int? {
                 self.secondCounter.text = "\(secondValue)"
             }
             
         }
-        
     }
     
-    @IBAction func startTrafficLights(_ sender: Any) {
-        self.trafficLightController.start()
+    @IBAction func toggleTrafficLights(_ sender: UIButton) {
+        if (!self.trafficLightController.isRunning) {
+            self.trafficLightController.start()
+            //TODO: Move this text to a NSLocalisedString
+            sender.setTitle("stop", for: UIControlState.normal)
+        }else {
+            self.trafficLightController.stop()
+            sender.setTitle("start", for: UIControlState.normal)
+        }
 
+        
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    //MARK- Logic
+    //MARK: - Logic
     func updateLightStates(_ lights:LightDictionary) {
-        let northState = lights[LightDirection.NORTH]!.currentState
-        northLight.image = imageMap[northState]!
         
-        let southState = lights[LightDirection.SOUTH]!.currentState
-        southLight.image = imageMap[southState]!
-        
-        let eastState = lights[LightDirection.EAST]!.currentState
-        eastLight.image = imageMap[eastState]!
-        
-        let westState = lights[LightDirection.WEST]!.currentState
-        westLight.image = imageMap[westState]!
-        
+        for (direction, light) in lights {
+            if let lightImage = self.lightMap?[direction] {
+                if let image = imageMap[light.currentState] {
+                    lightImage.image = image
+                } else {
+                    debugPrint("image asset not found for \(light.currentState)")
+                }
+            } else {
+                debugPrint("UIView not found for \(direction)")
+            }
+        }
     
     }
     
+   
 
 
 

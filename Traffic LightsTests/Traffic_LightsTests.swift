@@ -8,26 +8,61 @@ import XCTest
 
 class Traffic_LightsTests: XCTestCase {
     
+    var lightController = TrafficLightController()
+
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        lightController.maxTime = 5
+        lightController.tick = 1
+        lightController.amberSec = 3
+        lightController.start()
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        lightController.reset()
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testNorthEastInequality() {
+        let lightStates = lightController.lightStates
+        let northLight = lightStates[LightDirection.north]
+        let eastLight = lightStates[LightDirection.east]
+        
+        XCTAssert(northLight?.currentState != eastLight?.currentState)
+        
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testNorthSouthEquality() {
+        let lightStates = lightController.lightStates
+        let northLight = lightStates[LightDirection.north]
+        let southLight = lightStates[LightDirection.south]
+        XCTAssert(northLight?.currentState == southLight?.currentState)
     }
+    
+    //TODO: Test that the lights turn from green to Amber before going to red. This will involve XCTestExpectation, but I've not worked with it in the past and time is limited. Keeping below method to show what I tried and what didn't work :(
+//    
+//    func testGreenToAmber() {
+//        let lightStates = lightController.lightStates
+//        let greenLights = lightStates.values.filter { (value: TrafficLight) -> Bool in
+//            if value.currentState == TrafficLight.State.green {
+//                return true
+//            }
+//            return false
+//        }
+//        
+//        
+//        while lightController.seconds < lightController.amberSec {
+//            print(lightController.seconds)
+//            Thread.sleep(forTimeInterval: TimeInterval(1))
+//        }
+//
+//        for light in greenLights {
+//            XCTAssert(light.currentState == TrafficLight.State.amber)
+//        }
+//    
+//    
+//    }
+
     
 }

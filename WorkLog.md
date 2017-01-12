@@ -103,3 +103,14 @@ Opened the supplied Test xcode project (earlier tody I was in my empty apartment
 23:10 - Todos for tomorrow - figure out what makes sense to unit test & add unit tests. Think about alternative approaches.
 
 23:45 - A quick fix to contraints to make sure the app looks good on iPhone 5 as well, and I head off to bed.
+
+Tuesday:
+
+11:30 am: Start work again.
+
+Tweaked autolayout and added a stop feature to the lights.
+
+12:00pm : 
+Unit tests : Struggled to think of useful tests given the simplicity of the solution. I also struggeled to implement a check to verify that the light is amber after some time. I played a bit with using GCD to make the light controller Async, but as ever, once we get to multithreading we start getting all sorts of lovely edge cases to consider. In the "real world" this is probably a path I'd take
+I also spent some time cleaning up the code and removing hardcoded strings of text. I removed the all caps values of the enums to try to make the code more idiomatic - and gooddamn I still wish Xcode supports refactor. What a waste of time renaming is right now!
+13:37: Updated this work log and the readme file.

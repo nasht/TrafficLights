@@ -185,6 +185,7 @@
 				TargetAttributes = {
 					4935A9F21D4726F900B782BC = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = S3FQ296564;
 						LastSwiftMigration = 0820;
 					};
 					4935AA061D4726F900B782BC = {
@@ -375,6 +376,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = S3FQ296564;
 				INFOPLIST_FILE = "Traffic Lights/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Traffic-Lights";
@@ -387,6 +389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = S3FQ296564;
 				INFOPLIST_FILE = "Traffic Lights/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Traffic-Lights";

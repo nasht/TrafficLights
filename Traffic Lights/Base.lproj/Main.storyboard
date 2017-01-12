@@ -57,14 +57,14 @@
                                 </constraints>
                                 <state key="normal" title="start"/>
                                 <connections>
-                                    <action selector="startTrafficLights:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fsy-09-pRP"/>
+                                    <action selector="toggleTrafficLights:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9gX-5H-J4v"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EhP-KA-WuR">
-                                <rect key="frame" x="120" y="391" width="134" height="32.5"/>
+                                <rect key="frame" x="249" y="578.5" width="16.5" height="32.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32.5" id="AzP-il-gs8"/>
-                                    <constraint firstAttribute="width" constant="134" id="dRd-MP-7dA"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="134" id="dRd-MP-7dA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="27"/>
                                 <nil key="textColor"/>
@@ -73,19 +73,25 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="EhP-KA-WuR" firstAttribute="bottom" secondItem="hp2-cV-v30" secondAttribute="bottom" id="KpB-4j-DnN"/>
                             <constraint firstItem="nrP-ZX-1ws" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="N7P-rc-2u3"/>
-                            <constraint firstItem="hp2-cV-v30" firstAttribute="top" secondItem="EhP-KA-WuR" secondAttribute="bottom" constant="59.5" id="URC-rJ-B5A"/>
                             <constraint firstItem="mdM-Ux-JTm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ViU-hV-iaB"/>
                             <constraint firstItem="nrP-ZX-1ws" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="aLb-uU-7LK"/>
+                            <constraint firstItem="EhP-KA-WuR" firstAttribute="leading" secondItem="hp2-cV-v30" secondAttribute="trailing" constant="30" id="bOp-ru-ccM"/>
                             <constraint firstItem="Blh-xk-e73" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="baB-b6-LZz"/>
                             <constraint firstItem="Blh-xk-e73" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cJ2-ZC-hdl"/>
+                            <constraint firstItem="EhP-KA-WuR" firstAttribute="top" relation="lessThanOrEqual" secondItem="0zm-Sr-Oef" secondAttribute="bottom" constant="148" id="cqe-m6-Lb6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0zm-Sr-Oef" secondAttribute="trailing" constant="10" id="fnY-vY-pG7"/>
-                            <constraint firstItem="EhP-KA-WuR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ihz-N4-t9n"/>
                             <constraint firstItem="mdM-Ux-JTm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="35" id="lbP-uG-KEx"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hp2-cV-v30" secondAttribute="bottom" constant="56" id="tuY-zz-xE9"/>
                             <constraint firstItem="0zm-Sr-Oef" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="urH-vy-Q8M"/>
                             <constraint firstItem="hp2-cV-v30" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v9h-Ff-wPh"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="cqe-m6-Lb6"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="eastLight" destination="nrP-ZX-1ws" id="g6d-rT-Gah"/>
